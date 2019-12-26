@@ -7,34 +7,10 @@ class App extends Component {
 
   state = {
     isLoading: false,
-    invoices: [
-      {
-        "id": "100",
-        "Vendor": "Hankook",
-        "Amount": "$18,000",
-        "invoice": "1123",
-        "Date": "08/21/2019"
-      },
-
-      {
-        "id": "200",
-        "Vendor": "Hankook",
-        "Amount": "$18,000",
-        "invoice": "1123",
-        "Date": "08/21/2019"
-      },
-
-      {
-        "id": "300",
-        "Vendor": "Hankook",
-        "Amount": "$18,000",
-        "invoice": "1123",
-        "Date": "08/21/2019"
-      }
-    ]
+    invoices: [],
   }
 
-  remove(id) {
+  remove = (id) => {
     console.log(id);
     let updateedInvoices = [...this.state.invoices].filter(i => i.id !== id)
 
@@ -42,11 +18,13 @@ class App extends Component {
   }
 
 
-  async componentDidMount() {
+  //FIXME: cors errors on AWS API gateway
+  componentDidMount = async () => {
     const response = await fetch(
-      "https://e106ldopga.execute-api.us-west-1.amazonaws.com/Dev"
+      'https://70ujzpqgrk.execute-api.us-west-2.amazonaws.com/production'
     );
     const body = await response.json();
+    console.log('this is the body:', body)
     this.setState({ invoices: body, isLoading: false });
   }
 
@@ -56,6 +34,7 @@ class App extends Component {
 
     const isLoading = this.state.isLoading;
     const allinvoices = this.state.invoices;
+    console.log('invoice:', this.state.invoices)
 
 
 
